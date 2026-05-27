@@ -1,0 +1,205 @@
+.container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 0 15px;
+}
+
+.kaamna-header {
+  background: #ffffff;
+  padding: 15px 0;
+  border-bottom: 1px solid #d5d9d9;
+}
+
+.header-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+}
+
+.brand-identity {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo {
+  width: 150px;
+  border-radius: 50%;
+}
+
+.brand-text h1 {
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  line-height: 1;
+}
+
+.brand-text p {
+  font-size: 0.75rem;
+  color: #565959;
+}
+
+.order-card {
+  background: #ffffff;
+  border: 1px solid #d5d9d9;
+  border-radius: 12px;
+  margin-bottom: 30px;
+  overflow: hidden;
+}
+
+.order-card-header {
+  background: #f0f2f2;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-size: 0.85rem;
+  border-bottom: 1px solid #d5d9d9;
+}
+
+.label {
+  color: #565959;
+  display: block;
+  text-transform: uppercase;
+  font-size: 0.7rem;
+  font-weight: bold;
+}
+
+.value {
+  font-weight: bold;
+}
+
+.order-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.order {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+.product-thumb {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+.product-details h3 {
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+  color: #1a3a2a;
+}
+
+.status {
+  font-weight: bold;
+  color: #007600;
+  margin-bottom: 5px;
+}
+
+.qty {
+  font-size: 0.9rem;
+  color: #565959;
+}
+
+.product-actions {
+  width: 100%;
+}
+
+.btn {
+  display: block;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  cursor: pointer;
+  text-align: center;
+  border: 1px solid #d5d9d9;
+  width: 100%;
+}
+
+.btn-primary {
+  background: #1a3a2a;
+  color: #ffffff;
+  text-decoration: none;
+  justify-self: center;
+}
+
+.btn-secondary {
+  background: #1a3a2a;
+  color: #ffffff;
+  border-color: #1a3a2a;
+}
+
+.order-footer {
+  padding: 12px 20px;
+  background: #f9f7f0;
+  border-top: 1px solid #d5d9d9;
+  text-align: center;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 480px) {
+  .header-container {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .brand-identity {
+    flex-direction: row;
+    text-align: left;
+  }
+
+  .logo {
+    width: 180px;
+  }
+
+  .order-card-header {
+    flex-direction: row;
+    gap: 25px;
+  }
+
+  .product-info {
+    flex-direction: row;
+    align-items: flex-start;
+    text-align: left;
+  }
+}
+
+@media (min-width: 768px) {
+  .order {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .product-actions {
+    width: auto;
+  }
+
+  .btn-primary {
+    width: 200px;
+  }
+}
