@@ -1,0 +1,161 @@
+p{
+  margin: 0;
+}
+
+.hidden{
+  display: none;
+}
+
+/* hero text */
+
+header{
+  transition: display 0.5s ease-in-out;
+}
+
+.hero-container {
+  padding: 50px;
+  max-width: 80%;
+  text-align: center;
+  transition: display 0.5s ease-in-out;
+}
+
+.hero-main {
+  color: #0e3020; /* Dark Green */
+  font-size: 35px;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+/* The slanted red line over "Paisa" */
+.red-line {
+  position: relative;
+  display: inline-block;
+}
+
+.red-line::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  width: 105%;
+  height: 5px;
+  background-color: #e63946; /* Red */
+  transform: rotate(-5deg); /* This makes it slanted */
+}
+
+/* The thick underline on the second row */
+.green-underline {
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  text-decoration-thickness: 3px;
+}
+
+.hero-italic {
+  color: #777;
+  font-style: italic;
+  font-size: 20px;
+  margin-top: 15px;
+}
+
+/* 2. Medium Devices (Tablets - screens smaller than 992px) */
+@media (max-width: 992px) {
+  .hero-main {
+    font-size: 30px; /* Slightly smaller for tablets */
+  }
+}
+
+/* 3. Small Devices (Phones - screens smaller than 600px) */
+@media (max-width: 600px) {
+  .hero-main {
+    font-size: 15px; /* Small enough so it doesn't break into 4 lines */
+  }
+  
+  /* Adjust the red line thickness for smaller text */
+  .red-line::after {
+    height: 3px; 
+  }
+}
+
+/* Subtext sizing */
+.hero-italic {
+  color: #777;
+  font-style: italic;
+  font-size: 24px;
+}
+
+@media (max-width: 600px) {
+  .hero-italic {
+    font-size: 8px;
+  }
+}
+
+/* products */
+
+.card{
+  box-shadow: 0px 2px 7px #000000;
+  border-radius: 15px;
+  justify-self: center;
+  width: 100%;
+  height: 100%;
+  max-width: 400px;
+  /* width: 18rem; */
+}
+
+.card button{
+  background-color: #0E3020;
+  color: white;
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  padding: 5px 10px;
+  font-weight: 500;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.card-body{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-end;
+  font-weight: 600;
+}
+
+/* .card-title{
+  font-weight: 100;
+} */
+
+.product-ratings{
+  display: flex;
+  gap: 2px;
+  margin-bottom: 4px;
+}
+
+/* for explaining purpose  */
+/* .products-container{
+  display: flex;
+} */
+
+.image-box{
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5px;
+}
+
+.image-box img{
+  width: 100px;
+  max-height: 100%;
+}
+
+.added-message{
+  color: #0E3020;
+  /* display: none; */
+  opacity: 0;
+}
+
+.show{
+  /* display: block; */
+  opacity: 1;
+}
