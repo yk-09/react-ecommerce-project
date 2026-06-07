@@ -1,5 +1,6 @@
 import './HomePage.css';
 import './NavBar.css';
+import MySkeleton from './SkeletonLoad';
 // import './Skeleton.css';
 
 export function HomePage(){
@@ -7,35 +8,6 @@ export function HomePage(){
 
     <>
       <title>Homepage</title>
-
-      <article className="loading-homepage js-loading-homepage">
-        <nav className="nav">
-          <div className="image skeleton"></div>
-          <div className="search skeleton"></div>
-          <div className="return-orders skeleton"></div>
-          <div className="hart skeleton"></div>
-        </nav>
-
-        <section className="hero-section">
-          <div className="p-1 skeleton"></div>
-          <div className="p-2 skeleton"></div>
-        </section>
-
-        <section className="products-grid">
-          <article className="product skeleton">
-          </article>
-          <article className="product skeleton">
-          </article>
-          <article className="product skeleton">
-          </article>
-          <article className="product skeleton">
-          </article>
-          <article className="product skeleton">
-          </article>
-          <article className="product skeleton">
-          </article>
-        </section>
-      </article>
 
       <header className="hidden js-homepage-header">
         <nav className="navbar-large-screens">
@@ -146,23 +118,27 @@ export function HomePage(){
         </form>
       </header>
 
-      <section className="hero-container js-hero-section hidden">
-        <h1 className="hero-main">
-          Jaha <span className="red-line">Paisa</span> khatam hota hai... <br />
-          <span className="green-underline">Par Kaamna nahi.</span>
-        </h1>
-        <p className="hero-italic">
-          Try karke dekhlo.
-        </p>
-      </section>
+      <main>
+        <MySkeleton />
 
-      <section className="container my-5">
-        <div
-          className="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 js-products-row"
-        >
-           {/* generating prodycts html using javascript  */}
-        </div>
-      </section>
+        <section className="hero-container js-hero-section hidden">
+          <h1 className="hero-main">
+            Jaha <span className="red-line">Paisa</span> khatam hota hai... <br />
+            <span className="green-underline">Par Kaamna nahi.</span>
+          </h1>
+          <p className="hero-italic">
+            Try karke dekhlo.
+          </p>
+        </section>
+
+        <section className="container my-5">
+          <div
+            className="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 js-products-row"
+          >
+            {/* generating prodycts html using javascript  */}
+          </div>
+        </section>
+      </main>
     </>
   )
 }
