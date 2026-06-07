@@ -42,7 +42,7 @@ function SearchBar() {
   );
 }
 
-function OrderLink() {
+export function OrderLink() {
   return (
     <a href="orders.html" className="order-page-link">
       Returns&Orders

@@ -3,6 +3,7 @@ import './NavBar.css';
 import MySkeleton from './SkeletonLoad';
 import './Skeleton.css';
 import MyNavBarForLargeScreen from './LSNavBar';
+import NavBarSmallScreen from './SSNavBar';
 
 export function HomePage(){
   return (
@@ -12,42 +13,7 @@ export function HomePage(){
 
       <header className="hidden js-homepage-header">
         <MyNavBarForLargeScreen />
-        <nav className="navbar-small-screens">
-          <div className="nav-top">
-            <figure>
-              <img src="/brand-icon.jpg" alt="brand icon kaamna jaha paisa khatam kaamna nai" width="200" height="80" />
-            </figure>
-            <button className="expand-menu-btn js-expand-menu-btn">☰</button>
-          </div>
-          <div className="mobile-menu js-mobile-menu">
-            <div className="cart-wrapper">
-              <a href="checkout.html">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path
-                    d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"
-                  />
-                </svg>
-                <span className="cart-quantity js-cart-quantity-sd">1</span>
-                <p>
-                  ( Checkout your desires )
-                </p>
-              </a>
-            </div>
-            <a href="orders.html" className="order-page-link">
-              Returns&Orders
-            </a>
-          </div>
-        </nav>
+        <NavBarSmallScreen />
         <form className="search-products-sd" action="" method="get">
           <label className="sr-only" htmlFor="search-bar">search products</label>
           <button type="submit">
