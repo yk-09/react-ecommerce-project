@@ -1,18 +1,22 @@
 import './HomePage.css';
-import './NavBar.css';
 import MySkeleton from './SkeletonLoad';
 import './Skeleton.css';
 import MyNavBarForLargeScreen from './LSNavBar';
 import NavBarSmallScreen from './SSNavBar';
+import './NavBar.css';
 import { ProductsGrid } from './Products';
+import { useState } from 'react';
 
 export function HomePage(){
+
+  const [displayStatus, setDisplayStatus] = useState('');
+
   return (
 
     <>
       <title>Homepage</title>
 
-      <header className="hidden js-homepage-header">
+      <header style={{display: displayStatus === 'none' ? 'block' : 'none'}}>
         <MyNavBarForLargeScreen />
         <NavBarSmallScreen />
         <form className="search-products-sd" action="" method="get">
@@ -39,7 +43,7 @@ export function HomePage(){
       </header>
 
       <main>
-        <MySkeleton />
+        <MySkeleton displayStatus={displayStatus}/>
 
         <section className="hero-container js-hero-section hidden">
           <h1 className="hero-main">
@@ -51,7 +55,7 @@ export function HomePage(){
           </p>
         </section>
 
-        <ProductsGrid />
+        <ProductsGrid setDisplayStatus={setDisplayStatus} />
         
       </main>
     </>

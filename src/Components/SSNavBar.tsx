@@ -1,6 +1,18 @@
 import { OrderLink } from "./LSNavBar";
+import './NavBar.css';
+import { useState } from "react";
 
-function HamBurger() {
+interface HamBurgerProps {
+  isExpanded: boolean;
+  setIsExpanded: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+function HamBurger({isExpanded,setIsExpanded} : HamBurgerProps) {
+
+  function handleClick(){
+    setIsExpanded(!isExpanded);
+  }
+
   return (
     <div className="nav-top">
       <figure>
@@ -11,7 +23,7 @@ function HamBurger() {
           height="80"
         />
       </figure>
-      <button className="expand-menu-btn js-expand-menu-btn">☰</button>
+      <button onClick={handleClick} className="expand-menu-btn js-expand-menu-btn">☰</button>
     </div>
   );
 }
@@ -40,20 +52,27 @@ function CartWrapper() {
   );
 } 
 
-function MobileMenu(){
+interface MobileMenuProps {
+  isExpanded: boolean;
+}
+
+function MobileMenu({isExpanded}: MobileMenuProps){
   return (
-    <>
+    <div className={`mobile-menu ${isExpanded ? "mobile-menu-expanded" : ""}`}
+>
       <CartWrapper />
       <OrderLink />
-    </>
+    </div>
   )
 }
 
 export default function NavBarSmallScreen(){
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
-    <>
-      <HamBurger />
-      <MobileMenu />
-    </>
+    <nav className="navbar-small-screens">
+      <HamBurger isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
+      <MobileMenu isExpanded={isExpanded} />
+    </nav>
   )
 } 

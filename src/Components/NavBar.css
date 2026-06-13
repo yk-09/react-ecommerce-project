@@ -145,7 +145,6 @@ header{
 
 .cart-wrapper{
   display: flex;
-  justify-content: center;
   align-items: center;
   margin-top: 10px;
   color: rgba(204, 14, 14, 0.671);

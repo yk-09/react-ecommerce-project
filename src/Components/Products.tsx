@@ -67,13 +67,18 @@ function ProductCard({ product }: { product: Product }) {
   );
 }
 
-export function ProductsGrid(){
+interface ProductsGridProps {
+  setDisplayStatus: React.Dispatch<React.SetStateAction<string>>;
+}
+
+export function ProductsGrid({setDisplayStatus} : ProductsGridProps){
 
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     async function fetchProducts(){
       try{
+
         const res =  await axios.get<Product[]>(
           'https://69ada80eb50a169ec87fef13.mockapi.io/products'
         );
@@ -85,11 +90,12 @@ export function ProductsGrid(){
         console.error(error);
       }finally{
         console.log('done');
+        setDisplayStatus('none');
       }
     }
 
     fetchProducts();
-  }, []);
+  }, [setDisplayStatus]);
 
   return (
     <section className="container my-5">
