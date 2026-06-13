@@ -4,6 +4,7 @@ import MySkeleton from './SkeletonLoad';
 import './Skeleton.css';
 import MyNavBarForLargeScreen from './LSNavBar';
 import NavBarSmallScreen from './SSNavBar';
+import { ProductsGrid } from './Products';
 
 export function HomePage(){
   return (
@@ -50,13 +51,8 @@ export function HomePage(){
           </p>
         </section>
 
-        <section className="container my-5">
-          <div
-            className="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 js-products-row"
-          >
-            {/* generating prodycts html using javascript  */}
-          </div>
-        </section>
+        <ProductsGrid />
+        
       </main>
     </>
   )
