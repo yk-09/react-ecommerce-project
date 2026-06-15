@@ -1,21 +1,37 @@
 import axios from 'axios'
 import { useState, useEffect } from 'react';
 import formatCurrency from '../utility/formatCurrency';
+import type { Product, ProductsGridProps, ProductCardProps } from '../types/product';
+import { handleAddToCart } from "../services/cartService";
 
-interface Rating {
-    stars: number,
-    count: number
+function ProductCard({ product, setCart }: ProductCardProps) {
+  // const [loading, setLoading] = useState(false);
+  const [productQuantity, setProductQuantity] = useState(1);
+
+  function handleChange (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) {
+    const newQuantity = Number(e.target.value);
+    setProductQuantity(newQuantity);
   }
 
-interface Product {
-  readonly id: string,
-  image: string,
-  name: string, 
-  rating: Rating,
-  pricePaisa: number
-}
+  async function addProduct() {
+    try {
+      // setLoading(true);
 
-function ProductCard({ product }: { product: Product }) {
+      const updatedCart = await handleAddToCart(
+        product.id,
+        productQuantity
+      );
+
+      setCart(updatedCart);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      // setLoading(false);
+    }
+  }
+
   return (
     <div className="col">
       <article className="card">
@@ -36,6 +52,7 @@ function ProductCard({ product }: { product: Product }) {
             <div className="reviews">({product.rating.count})</div>
           </div>
           <select
+            onChange={handleChange}
             name="product-quantity"
             id="js-quantity-selector-${
                   product.id
@@ -54,10 +71,8 @@ function ProductCard({ product }: { product: Product }) {
           </select>
           <div className="added-message js-added-message">✔ Added</div>
           <button
-            className="btn add-to-cart-button js-add-to-hart-button"
-            data-product-id="${
-                  product.id
-                }"
+            onClick={addProduct}
+            className="btn add-to-cart-button"
           >
             Add to Hart
           </button>
@@ -67,11 +82,7 @@ function ProductCard({ product }: { product: Product }) {
   );
 }
 
-interface ProductsGridProps {
-  setDisplayStatus: React.Dispatch<React.SetStateAction<string>>;
-}
-
-export function ProductsGrid({setDisplayStatus} : ProductsGridProps){
+export function ProductsGrid({setDisplayStatus, setCart} : ProductsGridProps){
 
   const [products, setProducts] = useState<Product[]>([]);
 
@@ -100,10 +111,10 @@ export function ProductsGrid({setDisplayStatus} : ProductsGridProps){
   return (
     <section className="container my-5">
       <div
-        className="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4 js-products-row"
+        className="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4"
       >
         {products.map((product) => {
-          return <ProductCard key={product.id} product={product}/>
+          return <ProductCard key={product.id} product={product} setCart={setCart}/>
         })}
       </div>
     </section>

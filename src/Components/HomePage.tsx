@@ -6,19 +6,25 @@ import NavBarSmallScreen from './SSNavBar';
 import './NavBar.css';
 import { ProductsGrid } from './Products';
 import { useState } from 'react';
+import type { CartItem } from "../types/cart";
 
 export function HomePage(){
 
   const [displayStatus, setDisplayStatus] = useState('');
+  const [cart, setCart] = useState<CartItem[]>([]);
 
+  const cartQuantity = cart.reduce(
+    (sum, item) => sum + item.productQuantity,
+    0
+  );
   return (
 
     <>
       <title>Homepage</title>
 
       <header style={{display: displayStatus === 'none' ? 'block' : 'none'}}>
-        <MyNavBarForLargeScreen />
-        <NavBarSmallScreen />
+        <MyNavBarForLargeScreen cartQuantity={cartQuantity} />
+        <NavBarSmallScreen cartQuantity={cartQuantity} />
         <form className="search-products-sd" action="" method="get">
           <label className="sr-only" htmlFor="search-bar">search products</label>
           <button type="submit">
@@ -55,7 +61,7 @@ export function HomePage(){
           </p>
         </section>
 
-        <ProductsGrid setDisplayStatus={setDisplayStatus} />
+        <ProductsGrid setDisplayStatus={setDisplayStatus} setCart={setCart} />
         
       </main>
     </>

@@ -28,7 +28,11 @@ function HamBurger({isExpanded,setIsExpanded} : HamBurgerProps) {
   );
 }
 
-function CartWrapper() {
+interface CartWrapperProps {
+  cartQuantity: number
+}
+
+function CartWrapper({cartQuantity}: CartWrapperProps) {
   return (
     <div className="cart-wrapper">
       <a href="checkout.html">
@@ -45,7 +49,7 @@ function CartWrapper() {
         >
           <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />
         </svg>
-        <span className="cart-quantity js-cart-quantity-sd">1</span>
+        <span className="cart-quantity js-cart-quantity-sd">{cartQuantity}</span>
         <p>( Checkout your desires )</p>
       </a>
     </div>
@@ -54,25 +58,30 @@ function CartWrapper() {
 
 interface MobileMenuProps {
   isExpanded: boolean;
+  cartQuantity: number
 }
 
-function MobileMenu({isExpanded}: MobileMenuProps){
+function MobileMenu({isExpanded, cartQuantity}: MobileMenuProps){
   return (
     <div className={`mobile-menu ${isExpanded ? "mobile-menu-expanded" : ""}`}
 >
-      <CartWrapper />
+      <CartWrapper cartQuantity={cartQuantity} />
       <OrderLink />
     </div>
   )
 }
 
-export default function NavBarSmallScreen(){
+interface NavBarSmallScreen {
+  cartQuantity: number
+}
+
+export default function NavBarSmallScreen({cartQuantity}: NavBarSmallScreen){
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
     <nav className="navbar-small-screens">
       <HamBurger isExpanded={isExpanded} setIsExpanded={setIsExpanded} />
-      <MobileMenu isExpanded={isExpanded} />
+      <MobileMenu isExpanded={isExpanded} cartQuantity={cartQuantity} />
     </nav>
   )
 } 
