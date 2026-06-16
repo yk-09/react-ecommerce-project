@@ -1,12 +1,25 @@
 import axios from 'axios'
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import formatCurrency from '../utility/formatCurrency';
 import type { Product, ProductsGridProps, ProductCardProps } from '../types/product';
 import { handleAddToCart } from "../services/cartService";
 
 function ProductCard({ product, setCart }: ProductCardProps) {
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
+  const [isAddedDisplay, setIsAddedDisplay] = useState(false);
+
+  const timerRef = useRef<number | null>(null);
+
+  function displayAddedMessage() {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+    }
+
+    timerRef.current = setTimeout(() => {
+      setIsAddedDisplay(false);
+    }, 1000);
+  }
 
   function handleChange (
     e: React.ChangeEvent<HTMLSelectElement>
@@ -17,7 +30,7 @@ function ProductCard({ product, setCart }: ProductCardProps) {
 
   async function addProduct() {
     try {
-      // setLoading(true);
+      setLoading(true);
 
       const updatedCart = await handleAddToCart(
         product.id,
@@ -25,10 +38,12 @@ function ProductCard({ product, setCart }: ProductCardProps) {
       );
 
       setCart(updatedCart);
+      setIsAddedDisplay(true);
+      displayAddedMessage();
     } catch (error) {
       console.error(error);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   }
 
@@ -69,12 +84,13 @@ function ProductCard({ product, setCart }: ProductCardProps) {
             <option value="9">9</option>
             <option value="10">10</option>
           </select>
-          <div className="added-message js-added-message">✔ Added</div>
+          {isAddedDisplay && <div className="added-message">✔ Added</div>}
           <button
             onClick={addProduct}
             className="btn add-to-cart-button"
           >
-            Add to Hart
+            {loading && <span className="spinner"></span>}
+            <span>Add to Hart</span>
           </button>
         </div>
       </article>
