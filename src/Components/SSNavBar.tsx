@@ -1,3 +1,4 @@
+import type { Product } from "../types/product";
 import { OrderLink } from "./LSNavBar";
 import './NavBar.css';
 import { useState } from "react";
@@ -85,3 +86,21 @@ export default function NavBarSmallScreen({cartQuantity}: NavBarSmallScreen){
     </nav>
   )
 } 
+
+interface SearchProductsProps {
+  filteredProducts: Product[]
+}
+
+export function SearchProducts({filteredProducts}: SearchProductsProps){
+  return (
+    <>
+      <ul className="searched-products">
+        {filteredProducts.map((filteredPro) => {
+          return (
+            <li>{filteredPro.name}</li>
+          ) 
+        })}
+      </ul>
+    </>
+  )
+}

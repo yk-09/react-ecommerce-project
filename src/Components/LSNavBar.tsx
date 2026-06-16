@@ -13,7 +13,11 @@ function BrandIcon() {
   );
 }
 
-function SearchBar() {
+interface SearchBarProps {
+  handleChange: HandleChange
+}
+
+function SearchBar({handleChange}: SearchBarProps) {
   return (
     <form action="" method="get">
       <label htmlFor="search-bar" className="sr-only"></label>
@@ -39,6 +43,7 @@ function SearchBar() {
         name="search-bar"
         type="search"
         placeholder="Apni kaamna khojiye (search your desires)"
+        onChange={handleChange}
       />
     </form>
   );
@@ -79,15 +84,20 @@ function CartIcon({cartQuantity}: CartIconProps) {
   );
 }
 
+type HandleChange = (
+  e: React.ChangeEvent<HTMLInputElement>
+) => void
+
 interface NavBarLargeScreens {
-  cartQuantity: number
+  cartQuantity: number,
+  handleChange: HandleChange
 }
 
-export default function NavBarLargeScreens({cartQuantity}: NavBarLargeScreens){
+export default function NavBarLargeScreens({cartQuantity, handleChange}: NavBarLargeScreens){
   return (
     <nav className="navbar-large-screens">
       <BrandIcon />
-      <SearchBar />
+      <SearchBar handleChange={handleChange} />
       <OrderLink />
       <CartIcon cartQuantity={cartQuantity} />
     </nav>
