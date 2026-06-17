@@ -1,8 +1,8 @@
 import axios from 'axios'
 import { useState, useEffect, useRef } from 'react';
-import formatCurrency from '../utility/formatCurrency';
-import type { Product, ProductsGridProps, ProductCardProps } from '../types/product';
-import { handleAddToCart } from "../services/cartService";
+import formatCurrency from '../../utility/formatCurrency';
+import type { Product, ProductsGridProps, ProductCardProps } from '../../types/product';
+import { handleAddToCart } from "../../services/cartService";
 
 function ProductCard({ product, setCart }: ProductCardProps) {
   const [loading, setLoading] = useState(false);

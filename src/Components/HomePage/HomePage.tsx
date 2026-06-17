@@ -1,14 +1,14 @@
 import './HomePage.css';
-import MySkeleton from './SkeletonLoad';
+import MySkeleton from '../SkeletonLoad/SkeletonLoad';
 import './Skeleton.css';
-import MyNavBarForLargeScreen from './LSNavBar';
-import NavBarSmallScreen, { SearchProducts } from './SSNavBar';
+import MyNavBarForLargeScreen from '../Navbar/LSNavBar';
+import NavBarSmallScreen, { SearchProducts } from '../Navbar/SSNavBar';
 import './NavBar.css';
 import { ProductsGrid } from './Products';
 import { useState } from 'react';
-import type { CartItem } from "../types/cart";
-import { productsData } from '../services/products-data';
-import type { Product } from '../types/product';
+import type { CartItem } from "../../types/cart";
+import { productsData } from '../../services/products-data';
+import type { Product } from '../../types/product';
 
 export function HomePage(){
 
@@ -74,7 +74,7 @@ export function HomePage(){
       <main>
         <MySkeleton displayStatus={displayStatus}/>
 
-        <section className="hero-container js-hero-section hidden">
+        <section className="hero-container js-hero-section">
           <h1 className="hero-main">
             Jaha <span className="red-line">Paisa</span> khatam hota hai... <br />
             <span className="green-underline">Par Kaamna nahi.</span>

@@ -1,5 +1,5 @@
-import type { Product } from "../types/product";
-import { OrderLink } from "./LSNavBar";
+import type { Product } from "../../types/product";
+import { OrderLink } from './LSNavBar';
 import './NavBar.css';
 import { useState } from "react";
 
