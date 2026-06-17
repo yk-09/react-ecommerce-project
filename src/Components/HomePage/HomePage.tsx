@@ -1,9 +1,9 @@
 import './HomePage.css';
 import MySkeleton from '../SkeletonLoad/SkeletonLoad';
-import './Skeleton.css';
+import '../SkeletonLoad/Skeleton.css';
 import MyNavBarForLargeScreen from '../Navbar/LSNavBar';
 import NavBarSmallScreen, { SearchProducts } from '../Navbar/SSNavBar';
-import './NavBar.css';
+import '../Navbar/NavBar.css';
 import { ProductsGrid } from './Products';
 import { useState } from 'react';
 import type { CartItem } from "../../types/cart";

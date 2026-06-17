@@ -2,6 +2,7 @@ import type { Product } from "../../types/product";
 import { OrderLink } from './LSNavBar';
 import './NavBar.css';
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface HamBurgerProps {
   isExpanded: boolean;
@@ -36,7 +37,7 @@ interface CartWrapperProps {
 function CartWrapper({cartQuantity}: CartWrapperProps) {
   return (
     <div className="cart-wrapper">
-      <a href="checkout.html">
+      <Link to="/checkout">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"
@@ -52,7 +53,7 @@ function CartWrapper({cartQuantity}: CartWrapperProps) {
         </svg>
         <span className="cart-quantity js-cart-quantity-sd">{cartQuantity}</span>
         <p>( Checkout your desires )</p>
-      </a>
+      </Link>
     </div>
   );
 } 
