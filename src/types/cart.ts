@@ -4,3 +4,9 @@ export interface CartItem {
   productQuantity: number;
   deliveryOptionId: string;
 }
+
+export interface DeliveryOptions {
+  readonly id: string,
+  deliveryDays: number, 
+  shippingCost: number
+}
