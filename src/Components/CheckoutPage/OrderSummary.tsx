@@ -10,25 +10,63 @@ import { useState, useEffect } from "react"
 import type { CartItem, DeliveryOptions } from "../../types/cart";
 import './CheckoutPage.css';
 import './EmptyCart.css';
+import type { Product } from "../../types/product";
+import formatCurrency from "../../utility/formatCurrency";
+import { updateDeliveryOption } from "../../services/deliveryOptionApi";
 
 interface DeliveryOptionProps {
-  option: DeliveryOptions
+  option: DeliveryOptions,
+  item: CartItem,
+  setCart: React.Dispatch<
+    React.SetStateAction<CartItem[]>
+  >
 }
 
-function DeliveryOption({option}: DeliveryOptionProps){
+function DeliveryOption({option, item, setCart}: DeliveryOptionProps){
+
+  const isChecked = item.deliveryOptionId === option.id ? true : false;
+
+  async function handleClick() {
+    try {
+      const updatedCartItem =
+        await updateDeliveryOption(
+          item,
+          option.id
+        );
+
+      setCart(prev =>
+        prev.map(cartItem =>
+          cartItem.id === updatedCartItem.id
+            ? updatedCartItem
+            : cartItem
+        )
+      );
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
-    <div className="delivery-option">
-      <input type="radio" checked name="delivery-${productId}" />
+    <div className="delivery-option" onClick={handleClick}>
+      <input type="radio" checked={isChecked} name={`delivery-option-${item.productId}`} />
       <div className="js-delivery-info">
         <span className="date">
           Wendesday, June 24
-        </span><br /> {option.shippingCost ? `9000`: `Free Shipping`}
+        </span><br /> {option.shippingCost ? `₹${formatCurrency(option.shippingCost)}` : `Free Shipping`}
       </div>
     </div>
   )
 }
 
-export function OptionCard(){
+interface OptionCardProps {
+  item: CartItem,
+  setCart: React.Dispatch<
+    React.SetStateAction<CartItem[]>
+  > 
+}
+
+export function OptionCard({item, setCart}: OptionCardProps){
 
   const [deliveryOptionsData, setDeliveryOptionsData] = useState<DeliveryOptions[]>([]);
   
@@ -58,7 +96,7 @@ export function OptionCard(){
       <div className="option-title">Choose a delivery option:</div>
       <div className="delivery-options">
         {deliveryOptionsData.map((option) => {
-          return <DeliveryOption option={option} />
+          return <DeliveryOption option={option} item={item} setCart={setCart} />
         })}
       </div>
     </div>
@@ -66,20 +104,33 @@ export function OptionCard(){
 }
 
 interface CartItemCardProps {
-  item: CartItem
+  item: CartItem,
+  products: Product[],
+  setCart: React.Dispatch<
+    React.SetStateAction<CartItem[]>
+  >
 }
 
-function CartItemCard ({item}: CartItemCardProps) {
+function CartItemCard ({item, products, setCart}: CartItemCardProps) {
+
+  const product = products.find(
+    (product) => product.id === item.productId
+  );
+
+  if (!product) {
+    return null;
+  }
 
   return (
-    <div className="cart-item-container" data-cart-item-id="${cartItem.id}">
+
+    <div className="cart-item-container">
       <div className="delivery-date">Delivery date: Wednesday, June 20</div>
       <div className="cart-item-details-grid">
-        <img src="/products/athletic-cotton-socks-6-pairs.jpg" className="product-image" />
+        <img src={product.image} width={100}  />
 
         <div className="product-info">
-          <div className="product-name">Black and Gray Athletic Cotton Socks - 6 Pairs</div>
-          <div className="product-price">₹499.00</div>
+          <div className="product-name">{product.name}</div>
+          <div className="product-price">₹{formatCurrency(product.pricePaisa)}</div>
           <div className="product-quantity js-product-quantity-${productId}">
             Quantity: {item.productQuantity} 
             <span className="link-primary js-update-link" data-product-id="${productId}">Update</span>
@@ -96,27 +147,31 @@ function CartItemCard ({item}: CartItemCardProps) {
               Save
             </span>
 
-            <span className="link-primary js-delete-link" data-product-id="${productId}">Delete</span>
+            <span className="link-primary js-delete-link">Delete</span>
           </div>
         </div>
 
-        <OptionCard />
+        <OptionCard setCart={setCart} item={item} />
       </div>
     </div>  
   )
 }
 
 interface CartSummaryProps {
-  cart: CartItem[]
+  cart: CartItem[],
+  products: Product[],
+  setCart: React.Dispatch<
+    React.SetStateAction<CartItem[]>
+  >
 }
 
-export function CartSummary ({cart}: CartSummaryProps) {
+export function CartSummary ({cart, products, setCart}: CartSummaryProps) {
 
   return (
     <div className="order-review js-order-review">
       <h2>Review your attachments</h2>
       {cart.map((item) => {
-        return <CartItemCard item={item} />
+        return <CartItemCard products={products} item={item} setCart={setCart} />
       })}
     </div>
   )
