@@ -1,10 +1,9 @@
-import axios from 'axios'
-import { useState, useEffect, useRef } from 'react';
+import { useState, useRef } from 'react';
 import formatCurrency from '../../utility/formatCurrency';
-import type { Product, ProductsGridProps, ProductCardProps } from '../../types/product';
+import type { ProductsGridProps, ProductCardProps } from '../../types/product';
 import { handleAddToCart } from "../../services/cartService";
 
-function ProductCard({ product, setCart }: ProductCardProps) {
+function ProductCard({ product, setCart, cart }: ProductCardProps) {
   const [loading, setLoading] = useState(false);
   const [productQuantity, setProductQuantity] = useState(1);
   const [isAddedDisplay, setIsAddedDisplay] = useState(false);
@@ -34,7 +33,8 @@ function ProductCard({ product, setCart }: ProductCardProps) {
 
       const updatedCart = await handleAddToCart(
         product.id,
-        productQuantity
+        productQuantity,
+        cart
       );
 
       setCart(updatedCart);
@@ -98,31 +98,7 @@ function ProductCard({ product, setCart }: ProductCardProps) {
   );
 }
 
-export function ProductsGrid({setDisplayStatus, setCart} : ProductsGridProps){
-
-  const [products, setProducts] = useState<Product[]>([]);
-
-  useEffect(() => {
-    async function fetchProducts(){
-      try{
-
-        const res =  await axios.get<Product[]>(
-          'https://69ada80eb50a169ec87fef13.mockapi.io/products'
-        );
-
-        const data = res.data;
-        setProducts(data);
-
-      }catch(error){
-        console.error(error);
-      }finally{
-        console.log('done');
-        setDisplayStatus('none');
-      }
-    }
-
-    fetchProducts();
-  }, [setDisplayStatus]);
+export function ProductsGrid({products, setCart, cart} : ProductsGridProps){
 
   return (
     <section className="container my-5">
@@ -130,7 +106,7 @@ export function ProductsGrid({setDisplayStatus, setCart} : ProductsGridProps){
         className="row row-cols-1 row-cols-lg-4 row-cols-md-2 g-4"
       >
         {products.map((product) => {
-          return <ProductCard key={product.id} product={product} setCart={setCart}/>
+          return <ProductCard key={product.id} product={product} setCart={setCart} cart={cart}/>
         })}
       </div>
     </section>

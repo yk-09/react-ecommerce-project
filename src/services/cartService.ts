@@ -1,16 +1,15 @@
+import type { CartItem } from "../types/cart";
 import {
-  getCartBackend,
   addToCartBackend,
   updateCartItemQuantity,
 } from "./cartApi";
 
 export async function handleAddToCart(
   productId: string,
-  productQuantity: number
-) {
+  productQuantity: number,
+  cart: CartItem[]
+): Promise<CartItem[]> {
   try {
-    const cart = await getCartBackend();
-
     const existingProduct = cart.find(
       (item) => item.productId === productId
     );
@@ -19,20 +18,27 @@ export async function handleAddToCart(
       const newQty =
         existingProduct.productQuantity + productQuantity;
 
-      await updateCartItemQuantity(
-        existingProduct,
-        newQty
+      const updatedItem =
+        await updateCartItemQuantity(
+          existingProduct,
+          newQty
+        );
+
+      return cart.map((item) =>
+        item.id === updatedItem.id
+          ? updatedItem
+          : item
       );
-    } else {
+    }
+
+    const newCartItem =
       await addToCartBackend(
         productId,
         productQuantity
       );
-    }
 
-    const updatedCart = await getCartBackend();
+    return [...cart, newCartItem];
 
-    return updatedCart;
   } catch (error) {
     console.error(error);
     throw error;

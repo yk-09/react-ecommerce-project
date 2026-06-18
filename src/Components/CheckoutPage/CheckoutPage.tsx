@@ -4,6 +4,7 @@ import axios from "axios";
 import type { CartItem } from "../../types/cart";
 import SkeletonLoad from "../SkeletonLoad/SkeletonLoad";
 import { PaymentSummary } from "./PaymentSummary";
+import { Link } from "react-router-dom";
 
 export function CheckoutPage(){
 
@@ -40,9 +41,9 @@ export function CheckoutPage(){
       <header className="kaamna-header">
         <div className="header-content">
             <div className="brand-section">
-              <a href="index.html">
+              <Link to="/">
                 <img src="/brand-icon.jpg" alt="Kaamna Icon" className="brand-icon" />
-              </a>
+              </Link>
             </div>
           <div className="checkout-status js-checkout-status">
             <h2 className="js-checkout-quantity">

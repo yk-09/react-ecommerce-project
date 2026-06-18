@@ -14,11 +14,13 @@ export interface Rating {
 }
 
 export interface ProductsGridProps {
-  setDisplayStatus: React.Dispatch<React.SetStateAction<string>>;
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>
+  products: Product[]
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>,
+  cart: CartItem[]
 }
 
 export interface ProductCardProps {
   product: Product,
-  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>
+  setCart: React.Dispatch<React.SetStateAction<CartItem[]>>,
+  cart: CartItem[]
 }

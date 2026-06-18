@@ -10,10 +10,17 @@ import type { CartItem } from "../../types/cart";
 import { productsData } from '../../services/products-data';
 import type { Product } from '../../types/product';
 
-export function HomePage(){
+interface HomePagePros {
+  products: Product[],
+  isLoading: boolean,
+  cart: CartItem[],
+  setCart: React.Dispatch<
+    React.SetStateAction<CartItem[]>
+  >
+}
 
-  const [displayStatus, setDisplayStatus] = useState('');
-  const [cart, setCart] = useState<CartItem[]>([]);
+export function HomePage({products, isLoading, cart, setCart}: HomePagePros){
+
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
 
   const cartQuantity = cart.reduce(
@@ -44,7 +51,7 @@ export function HomePage(){
     <>
       <title>Homepage</title>
 
-      <header style={{display: displayStatus === 'none' ? 'block' : 'none'}}>
+      <header style={{display: isLoading? 'none' : 'block'}}>
         <MyNavBarForLargeScreen cartQuantity={cartQuantity} handleChange={handleChange} />
         <NavBarSmallScreen cartQuantity={cartQuantity} />
         <form className="search-products-sd" action="" method="get">
@@ -72,7 +79,7 @@ export function HomePage(){
       </header>
 
       <main>
-        <MySkeleton displayStatus={displayStatus}/>
+        {isLoading && <MySkeleton/>}
 
         <section className="hero-container js-hero-section">
           <h1 className="hero-main">
@@ -84,7 +91,7 @@ export function HomePage(){
           </p>
         </section>
 
-        <ProductsGrid setDisplayStatus={setDisplayStatus} setCart={setCart} />
+        <ProductsGrid products={products} setCart={setCart} cart={cart} />
         
       </main>
     </>

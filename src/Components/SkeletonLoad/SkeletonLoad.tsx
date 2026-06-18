@@ -39,13 +39,9 @@ function SkeletonProductsGrid(){
   )
 }
 
-interface SkeletonLoadProps {
-  displayStatus?: string;
-}
-
-export default function SkeletonLoad({displayStatus}: SkeletonLoadProps){
+export default function SkeletonLoad(){
   return (
-    <article style={{display: displayStatus}} className="loading-homepage js-loading-homepage">
+    <article className="loading-homepage">
       <SkeletonNav />
       <SkeletonHeroSection />
       <SkeletonProductsGrid />
