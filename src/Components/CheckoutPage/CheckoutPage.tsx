@@ -15,6 +15,11 @@ interface CheckoutPageProps {
 }
 export function CheckoutPage({cart, products, setCart}: CheckoutPageProps){
 
+  const cartQuantity = cart.reduce(
+  (sum, item) => sum + item.productQuantity,
+  0
+);
+
   return (
 
     <>
@@ -29,7 +34,7 @@ export function CheckoutPage({cart, products, setCart}: CheckoutPageProps){
             </div>
           <div className="checkout-status js-checkout-status">
             <h2 className="js-checkout-quantity">
-              Checkout(0 items)
+              Checkout({cartQuantity} items)
             </h2>
           </div>
         </div>

@@ -13,6 +13,7 @@ import './EmptyCart.css';
 import type { Product } from "../../types/product";
 import formatCurrency from "../../utility/formatCurrency";
 import { updateDeliveryOption } from "../../services/deliveryOptionApi";
+import { updateCartItemQuantity } from "../../services/cartApi";
 
 interface DeliveryOptionProps {
   option: DeliveryOptions,
@@ -113,6 +114,10 @@ interface CartItemCardProps {
 
 function CartItemCard ({item, products, setCart}: CartItemCardProps) {
 
+  const [updateRequired, setUpdateRequired] = useState(false);
+
+  const [quantity, setQuantity] = useState(item.productQuantity);
+
   const product = products.find(
     (product) => product.id === item.productId
   );
@@ -120,6 +125,38 @@ function CartItemCard ({item, products, setCart}: CartItemCardProps) {
   if (!product) {
     return null;
   }
+
+  async function handleSave() {
+  // Validation
+  if (
+    !Number.isInteger(quantity) ||
+    quantity < 1 ||
+    quantity > 10
+  ) {
+    alert("Quantity must be an integer between 1 and 10");
+    return;
+  }
+
+  try {
+    const updatedCartItem =
+      await updateCartItemQuantity(
+        item,
+        quantity
+      );
+
+    setCart(prev =>
+      prev.map(cartItem =>
+        cartItem.id === updatedCartItem.id
+          ? updatedCartItem
+          : cartItem
+      )
+    );
+
+    setUpdateRequired(false);
+  } catch (error) {
+    console.error(error);
+  }
+}
 
   return (
 
@@ -133,19 +170,27 @@ function CartItemCard ({item, products, setCart}: CartItemCardProps) {
           <div className="product-price">₹{formatCurrency(product.pricePaisa)}</div>
           <div className="product-quantity js-product-quantity-${productId}">
             Quantity: {item.productQuantity} 
-            <span className="link-primary js-update-link" data-product-id="${productId}">Update</span>
 
-            <input 
-              type="number" 
-              min="1" 
-              max="10" 
-              value="${cartItem.productQuantity}" 
-              className="js-quantity-input hidden" 
-              style={{width: '45px', padding: '2px'}}
-            />
-            <span className="link-primary js-save-link hidden" style={{marginLeft: '5px'}}>
-              Save
-            </span>
+
+            {!updateRequired && <span className="link-primary js-update-link" style={{marginLeft: '10px'}} onClick={() => {setUpdateRequired(true)}}>Update</span>}
+
+            {
+              updateRequired 
+              && 
+              <>
+                <input 
+                  type="number" 
+                  min="1" 
+                  max="10" 
+                  value="${cartItem.productQuantity}" 
+                  style={{width: '50px', marginLeft: '10px', paddingLeft: '10px'}}
+                  onChange={(e) => setQuantity(Number(e.target.value))}
+                />
+                <span className="link-primary js-save-link" style={{marginLeft: '5px'}} onClick={handleSave}>
+                  Save
+                </span>
+              </>
+            }
 
             <span className="link-primary js-delete-link">Delete</span>
           </div>
