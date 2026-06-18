@@ -13,7 +13,8 @@ import './EmptyCart.css';
 import type { Product } from "../../types/product";
 import formatCurrency from "../../utility/formatCurrency";
 import { updateDeliveryOption } from "../../services/deliveryOptionApi";
-import { updateCartItemQuantity } from "../../services/cartApi";
+import { updateCartItemQuantity, deleteCartItem } from "../../services/cartApi";
+import { Link } from "react-router-dom";
 
 interface DeliveryOptionProps {
   option: DeliveryOptions,
@@ -127,36 +128,50 @@ function CartItemCard ({item, products, setCart}: CartItemCardProps) {
   }
 
   async function handleSave() {
-  // Validation
-  if (
-    !Number.isInteger(quantity) ||
-    quantity < 1 ||
-    quantity > 10
-  ) {
-    alert("Quantity must be an integer between 1 and 10");
-    return;
-  }
+    if (
+      !Number.isInteger(quantity) ||
+      quantity < 1 ||
+      quantity > 10
+    ) {
+      alert("Quantity must be an integer between 1 and 10");
+      return;
+    }
 
-  try {
-    const updatedCartItem =
-      await updateCartItemQuantity(
-        item,
-        quantity
+    try {
+      const updatedCartItem =
+        await updateCartItemQuantity(
+          item,
+          quantity
+        );
+
+      setCart(prev =>
+        prev.map(cartItem =>
+          cartItem.id === updatedCartItem.id
+            ? updatedCartItem
+            : cartItem
+        )
       );
 
-    setCart(prev =>
-      prev.map(cartItem =>
-        cartItem.id === updatedCartItem.id
-          ? updatedCartItem
-          : cartItem
-      )
-    );
-
-    setUpdateRequired(false);
-  } catch (error) {
-    console.error(error);
+      setUpdateRequired(false);
+    } catch (error) {
+      console.error(error);
+    }
   }
-}
+
+  async function handleDelete() {
+    try {
+      await deleteCartItem(item.id);
+
+      setCart(prev =>
+        prev.filter(
+          cartItem => cartItem.id !== item.id
+        )
+      );
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
 
@@ -192,7 +207,7 @@ function CartItemCard ({item, products, setCart}: CartItemCardProps) {
               </>
             }
 
-            <span className="link-primary js-delete-link">Delete</span>
+            <span className="link-primary" onClick={handleDelete}>Delete</span>
           </div>
         </div>
 
@@ -238,7 +253,7 @@ export function EmptyCart(){
         <h2 className="alert-headline">Aapki cart khaali hai. Bilkul aapki tarah.</h2>
         <p className="alert-subline">Kuch bhar lo?</p>
 
-        <a href="index.html" className="explore-btn">Explore Attachments</a>
+        <Link to="/" className="explore-btn">Explore Attachments</Link>
         
       </div>
     </section>

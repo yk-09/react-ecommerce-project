@@ -35,3 +35,13 @@ export async function updateCartItemQuantity(
 
   return res.data;
 }
+
+export async function deleteCartItem(
+  cartItemId: string
+) {
+  const response = await axios.delete(
+    `${BASE_URL}/${cartItemId}`
+  );
+
+  return response.data;
+}
