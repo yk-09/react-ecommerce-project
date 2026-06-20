@@ -52,9 +52,9 @@ function SearchBar({handleChange}: SearchBarProps) {
 
 export function OrderLink() {
   return (
-    <a href="orders.html" className="order-page-link">
+    <Link to="/orders" className="order-page-link">
       Returns&Orders
-    </a>
+    </Link>
   );
 }
 
