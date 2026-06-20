@@ -1,22 +1,41 @@
 import { Link } from "react-router-dom";
-// import SkeletonLoad from "../SkeletonLoad/SkeletonLoad";
+import SkeletonLoad from "../SkeletonLoad/SkeletonLoad";
 import "./OrderPage.css";
+import type { Order } from "../../types/order";
+import { useState, useEffect } from "react";
+import { getOrders } from "../../services/orderApi";
+import type { CartItem, DeliveryOptions } from "../../types/cart";
+import formatCurrency from "../../utility/formatCurrency";
+import type { Product } from "../../types/product";
+import dayjs from "dayjs";
 
-export function OrderProducts() {
+interface OrderProductsProps {
+  item: CartItem,
+  product: Product,
+  option: DeliveryOptions,
+  orderTime: string
+}
+
+export function OrderProducts({item, product, option, orderTime}: OrderProductsProps) {
+
+
+  const arrivalDate = dayjs(orderTime).add(option.deliveryDays, 'days');
+
+  const dateFormatted = arrivalDate.format('dddd, MMMM D');
+
   return (
     <div className="order">
       <div className="product-info">
         <img
-          src="/products/athletic-cotton-socks-6-pairs.jpg"
-          alt="Nordic Mug Set"
+          src={product.image}
           className="product-thumb"
         />
         <div className="product-details">
-          <h3>Black and Gray Athletic Cotton Socks - 6 Pairs</h3>
+          <h3>{product.name}</h3>
           <p className="status">
-            Arriving on: <span className="arrival-date">March 31</span>
+            Arriving on: <span className="arrival-date">{dateFormatted}</span>
           </p>
-          <p className="qty">Quantity: 1</p>
+          <p className="qty">Quantity: {item.productQuantity}</p>
         </div>
       </div>
       <div className="product-actions">
@@ -31,26 +50,50 @@ export function OrderProducts() {
   );
 }
 
-function Order() {
+interface OrderProps {
+  order: Order,
+  products: Product[],
+  deliveryOptions: DeliveryOptions[]
+}
+
+function Order({order, products, deliveryOptions}: OrderProps) {
+
+  const orderDate = dayjs(order.orderTime).format("dddd, MMMM D");
+
   return (
     <article className="order-card">
       <header className="order-card-header">
         <div className="meta-item">
           <span className="label">Order Placed:</span>
-          <span className="value">Wednesday, June 20</span>
+          <span className="value">{orderDate}</span>
         </div>
         <div className="meta-item">
           <span className="label">Total:</span>
-          <span className="value">Rs 2000</span>
+          <span className="value">Rs {formatCurrency(order.totalPrice)}</span>
         </div>
         <div className="meta-item order-id-group">
           <span className="label">Order ID:</span>
-          <span className="value">18</span>
+          <span className="value">{order.orderId}</span>
         </div>
       </header>
 
       <div className="order-body">
-        <OrderProducts />
+        {order.products.map((item) => {
+
+          const product = products.find((product) => {
+            return item.productId === product.id
+          })
+
+          if(!product){return}
+
+          const option = deliveryOptions.find((option) => {
+            return item.deliveryOptionId === option.id
+          })
+
+          if(!option){return}
+
+          return <OrderProducts key={item.productId} item={item} product={product} option={option} orderTime={order.orderTime}/>
+        })}
       </div>
 
       <footer className="order-footer">
@@ -62,7 +105,32 @@ function Order() {
   );
 }
 
-export function OrderPage() {
+interface OrderPageProps {
+  products: Product[],
+  deliveryOptions: DeliveryOptions[]
+}
+
+export function OrderPage({products, deliveryOptions}: OrderPageProps) {
+
+  const [orders, setOrders] = useState<Order[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadOrders() {
+      try {
+        const orders = await getOrders();
+        setOrders(orders);
+        console.log(orders);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+
+    loadOrders();
+  }, []);
+
   return (
     <>
       <header className="kaamna-header">
@@ -79,10 +147,12 @@ export function OrderPage() {
       </header>
 
       <main className="container">
-        {/* <SkeletonLoad /> */}
+        {isLoading && <SkeletonLoad />}
 
         <section className="orders-list js-order-list">
-          <Order />
+          {orders.map((order) => {
+            return <Order key={order.orderId} order={order} products={products} deliveryOptions={deliveryOptions} />
+          })}
         </section>
       </main>
     </>

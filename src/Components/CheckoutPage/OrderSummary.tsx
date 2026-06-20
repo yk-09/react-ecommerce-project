@@ -79,16 +79,16 @@ interface OptionCardProps {
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
   >,
-  deliveryOptionsData: DeliveryOptions[]
+  deliveryOptions: DeliveryOptions[]
 }
 
-export function OptionCard({item, setCart, deliveryOptionsData}: OptionCardProps){
+export function OptionCard({item, setCart, deliveryOptions}: OptionCardProps){
 
   return (
     <div className="delivery-options">
       <div className="option-title">Choose a delivery option:</div>
       <div className="delivery-options">
-        {deliveryOptionsData.map((option) => {
+        {deliveryOptions.map((option) => {
           return <DeliveryOption option={option} item={item} setCart={setCart} />
         })}
       </div>
@@ -102,10 +102,10 @@ interface CartItemCardProps {
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
   >,
-  deliveryOptionsData: DeliveryOptions[]
+  deliveryOptions: DeliveryOptions[]
 }
 
-function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemCardProps) {
+function CartItemCard ({item, products, setCart, deliveryOptions}: CartItemCardProps) {
 
   const [updateRequired, setUpdateRequired] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -174,7 +174,7 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
     }
   } 
 
-  const matchingOption = deliveryOptionsData.find((option) => {
+  const matchingOption = deliveryOptions.find((option) => {
     return option.id === item.deliveryOptionId
   });
 
@@ -223,7 +223,7 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
           </div>
         </div>
 
-        <OptionCard setCart={setCart} item={item} deliveryOptionsData={deliveryOptionsData} />
+        <OptionCard setCart={setCart} item={item} deliveryOptions={deliveryOptions} />
       </div>
     </div>  
   )
@@ -235,16 +235,16 @@ interface CartSummaryProps {
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
   >,
-  deliveryOptionsData: DeliveryOptions[]
+  deliveryOptions: DeliveryOptions[]
 }
 
-export function CartSummary ({cart, products, setCart, deliveryOptionsData}: CartSummaryProps) {
+export function CartSummary ({cart, products, setCart, deliveryOptions}: CartSummaryProps) {
 
   return (
     <div className="order-review js-order-review">
       <h2>Review your attachments</h2>
       {cart.map((item) => {
-        return <CartItemCard products={products} item={item} setCart={setCart} deliveryOptionsData={deliveryOptionsData} />
+        return <CartItemCard products={products} item={item} setCart={setCart} deliveryOptions={deliveryOptions} />
       })}
     </div>
   )

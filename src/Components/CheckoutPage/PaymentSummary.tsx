@@ -11,13 +11,13 @@ interface PaymentSummaryProps {
   cartQuantity: number,
   cart: CartItem[],
   products: Product[],
-  deliveryOptionsData: DeliveryOptions[],
+  deliveryOptions: DeliveryOptions[],
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
   > 
 }
 
-export function PaymentSummary({ cartQuantity, cart, products, deliveryOptionsData, setCart }: PaymentSummaryProps) {
+export function PaymentSummary({ cartQuantity, cart, products, deliveryOptions, setCart }: PaymentSummaryProps) {
 
   const [loading, setLoading] = useState(false);
 
@@ -37,7 +37,7 @@ export function PaymentSummary({ cartQuantity, cart, products, deliveryOptionsDa
     }
 
     // normalization of delivery options
-    const matchingOption: DeliveryOptions | undefined = deliveryOptionsData.find(
+    const matchingOption: DeliveryOptions | undefined = deliveryOptions.find(
       (option) => option.id === deliveryOptionId
     );
     
