@@ -13,6 +13,7 @@ import formatCurrency from "../../utility/formatCurrency";
 import { updateDeliveryOption } from "../../services/deliveryOptionApi";
 import { updateCartItemQuantity, deleteCartItem } from "../../services/cartApi";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
 
 interface DeliveryOptionProps {
   option: DeliveryOptions,
@@ -53,6 +54,10 @@ function DeliveryOption({option, item, setCart}: DeliveryOptionProps){
     }
   }
 
+  const currentDate = dayjs();
+  const deliveryDate = currentDate.add( option.deliveryDays ,'days');
+  const formattedDate = deliveryDate.format('dddd, MMMM D');
+
   return (
     <div className="delivery-option" onClick={handleClick}>
       {
@@ -62,7 +67,7 @@ function DeliveryOption({option, item, setCart}: DeliveryOptionProps){
       }
       <div className="js-delivery-info">
         <span className="date">
-          Wendesday, June 24
+          {formattedDate}
         </span><br /> {option.shippingCost ? `₹${formatCurrency(option.shippingCost)}` : `Free Shipping`}
       </div>
     </div>
@@ -167,19 +172,31 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
     }finally{
       setIsDeleting(false);
     }
+  } 
+
+  const matchingOption = deliveryOptionsData.find((option) => {
+    return option.id === item.deliveryOptionId
+  });
+
+  if(!matchingOption){
+    return
   }
+
+  const currentDate = dayjs();
+  const deliveryDate = currentDate.add( matchingOption.deliveryDays ,'days');
+  const formattedDate = deliveryDate.format('dddd, MMMM D');
 
   return (
 
     <div className="cart-item-container">
-      <div className="delivery-date">Delivery date: Wednesday, June 20</div>
+      <div className="delivery-date">Delivery date: {formattedDate}</div>
       <div className="cart-item-details-grid">
         <img src={product.image} width={100}  />
 
         <div className="product-info">
           <div className="product-name">{product.name}</div>
           <div className="product-price">₹{formatCurrency(product.pricePaisa)}</div>
-          <div className="product-quantity js-product-quantity-${productId}">
+          <div className="product-quantity">
             Quantity: {item.productQuantity} 
 
 
