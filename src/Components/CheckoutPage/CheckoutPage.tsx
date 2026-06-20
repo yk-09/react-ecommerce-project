@@ -4,7 +4,9 @@ import { PaymentSummary } from "./PaymentSummary";
 import { Link } from "react-router-dom";
 import type { CartItem } from "../../types/cart";
 import type { Product } from "../../types/product";
-
+import type { DeliveryOptions } from "../../types/cart";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 interface CheckoutPageProps {
   cart: CartItem[],
@@ -16,9 +18,32 @@ interface CheckoutPageProps {
 export function CheckoutPage({cart, products, setCart}: CheckoutPageProps){
 
   const cartQuantity = cart.reduce(
-  (sum, item) => sum + item.productQuantity,
-  0
-);
+    (sum, item) => sum + item.productQuantity,
+    0
+  );
+
+  const [deliveryOptionsData, setDeliveryOptionsData] = useState<DeliveryOptions[]>([]);
+    
+  useEffect(() => {
+    async function fetchOptions(){
+      try{
+
+        const res =  await axios.get<DeliveryOptions[]>(
+          'https://69d1185f90cd06523d5dd7c7.mockapi.io/delivery-options'
+        );
+
+        const data = res.data;
+        setDeliveryOptionsData(data);
+
+      }catch(error){
+        console.error(error);
+      }finally{
+        console.log('done');
+      }
+    }
+
+    fetchOptions();
+  }, []);
 
   return (
 
@@ -46,8 +71,8 @@ export function CheckoutPage({cart, products, setCart}: CheckoutPageProps){
         {
           cart.length 
           ? <section className="checkout-grid js-checkout-grid">
-              <CartSummary cart={cart} products={products} setCart={setCart} />
-              <PaymentSummary />
+              <CartSummary cart={cart} products={products} setCart={setCart} deliveryOptionsData={deliveryOptionsData} />
+              <PaymentSummary cartQuantity={cartQuantity} cart={cart} products={products} deliveryOptionsData={deliveryOptionsData} />
             </section>  
           : <EmptyCart /> 
         }

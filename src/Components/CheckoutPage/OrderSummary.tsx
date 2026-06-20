@@ -4,9 +4,7 @@
   3. deliveryoption card 
   4. delivery option 
 */
-
-import axios from "axios"
-import { useState, useEffect } from "react"
+import { useState } from "react"
 import type { CartItem, DeliveryOptions } from "../../types/cart";
 import './CheckoutPage.css';
 import './EmptyCart.css';
@@ -65,33 +63,11 @@ interface OptionCardProps {
   item: CartItem,
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
-  > 
+  >,
+  deliveryOptionsData: DeliveryOptions[]
 }
 
-export function OptionCard({item, setCart}: OptionCardProps){
-
-  const [deliveryOptionsData, setDeliveryOptionsData] = useState<DeliveryOptions[]>([]);
-  
-  useEffect(() => {
-    async function fetchOptions(){
-      try{
-
-        const res =  await axios.get<DeliveryOptions[]>(
-          'https://69d1185f90cd06523d5dd7c7.mockapi.io/delivery-options'
-        );
-
-        const data = res.data;
-        setDeliveryOptionsData(data);
-
-      }catch(error){
-        console.error(error);
-      }finally{
-        console.log('done');
-      }
-    }
-
-    fetchOptions();
-  }, []);
+export function OptionCard({item, setCart, deliveryOptionsData}: OptionCardProps){
 
   return (
     <div className="delivery-options">
@@ -110,10 +86,11 @@ interface CartItemCardProps {
   products: Product[],
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
-  >
+  >,
+  deliveryOptionsData: DeliveryOptions[]
 }
 
-function CartItemCard ({item, products, setCart}: CartItemCardProps) {
+function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemCardProps) {
 
   const [updateRequired, setUpdateRequired] = useState(false);
 
@@ -211,7 +188,7 @@ function CartItemCard ({item, products, setCart}: CartItemCardProps) {
           </div>
         </div>
 
-        <OptionCard setCart={setCart} item={item} />
+        <OptionCard setCart={setCart} item={item} deliveryOptionsData={deliveryOptionsData} />
       </div>
     </div>  
   )
@@ -222,16 +199,17 @@ interface CartSummaryProps {
   products: Product[],
   setCart: React.Dispatch<
     React.SetStateAction<CartItem[]>
-  >
+  >,
+  deliveryOptionsData: DeliveryOptions[]
 }
 
-export function CartSummary ({cart, products, setCart}: CartSummaryProps) {
+export function CartSummary ({cart, products, setCart, deliveryOptionsData}: CartSummaryProps) {
 
   return (
     <div className="order-review js-order-review">
       <h2>Review your attachments</h2>
       {cart.map((item) => {
-        return <CartItemCard products={products} item={item} setCart={setCart} />
+        return <CartItemCard products={products} item={item} setCart={setCart} deliveryOptionsData={deliveryOptionsData} />
       })}
     </div>
   )
