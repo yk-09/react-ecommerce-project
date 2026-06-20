@@ -72,7 +72,7 @@ export function CheckoutPage({cart, products, setCart}: CheckoutPageProps){
           cart.length 
           ? <section className="checkout-grid js-checkout-grid">
               <CartSummary cart={cart} products={products} setCart={setCart} deliveryOptionsData={deliveryOptionsData} />
-              <PaymentSummary cartQuantity={cartQuantity} cart={cart} products={products} deliveryOptionsData={deliveryOptionsData} />
+              <PaymentSummary cartQuantity={cartQuantity} cart={cart} products={products} deliveryOptionsData={deliveryOptionsData} setCart={setCart} />
             </section>  
           : <EmptyCart /> 
         }

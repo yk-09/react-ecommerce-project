@@ -2,15 +2,24 @@ import type { CartItem } from "../../types/cart";
 import type { Product } from "../../types/product";
 import type { DeliveryOptions } from "../../types/cart";
 import formatCurrency from "../../utility/formatCurrency";
+import { createOrder } from "../../services/orderApi";
+import { deleteCartItem } from "../../services/cartApi";
+import { useState } from "react";
+import './loading.css';
 
 interface PaymentSummaryProps {
   cartQuantity: number,
   cart: CartItem[],
   products: Product[],
-  deliveryOptionsData: DeliveryOptions[]
+  deliveryOptionsData: DeliveryOptions[],
+  setCart: React.Dispatch<
+    React.SetStateAction<CartItem[]>
+  > 
 }
 
-export function PaymentSummary({ cartQuantity, cart, products, deliveryOptionsData }: PaymentSummaryProps) {
+export function PaymentSummary({ cartQuantity, cart, products, deliveryOptionsData, setCart }: PaymentSummaryProps) {
+
+  const [loading, setLoading] = useState(false);
 
   let totalProductsCost = 0;
   let shippingCost = 0;
@@ -42,8 +51,30 @@ export function PaymentSummary({ cartQuantity, cart, products, deliveryOptionsDa
   const extimatedTax = totalBeforeTax * 0.1;
   const grandTotal = totalBeforeTax + extimatedTax;
 
+  async function handlePlaceOrder() {
+  try {
+
+    setLoading(true);
+
+    await createOrder(cart, grandTotal);
+
+    await Promise.all(
+      cart.map((item) =>
+        deleteCartItem(item.id)
+      )
+    );
+
+    setCart([]);
+
+  } catch (error) {
+    console.error(error);
+  }finally{
+    setLoading(false);
+  }
+}
+
   return (
-    <section className="payment-summary js-payment-summary">
+    <section className="payment-summary">
       <div className="payment-summary">
         <h3>The Cost of Desire</h3>
         <div className="summary-row">
@@ -63,8 +94,9 @@ export function PaymentSummary({ cartQuantity, cart, products, deliveryOptionsDa
           <span>Order total:</span> <span>₹{formatCurrency(grandTotal)}</span>
         </div>
 
-        <button className="kaamna-btn js-kaamna-btn">
-          FULFILL YOUR DESIRES
+        <button className="kaamna-btn" onClick={handlePlaceOrder}>
+          {loading && <span className="spinner"></span>}
+          <span>FULFILL YOUR DESIRES</span>
         </button>
       </div>
     </section>
