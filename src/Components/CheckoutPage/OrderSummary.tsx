@@ -25,9 +25,13 @@ interface DeliveryOptionProps {
 function DeliveryOption({option, item, setCart}: DeliveryOptionProps){
 
   const isChecked = item.deliveryOptionId === option.id ? true : false;
+  const [loading, setLoading] = useState(false);
 
   async function handleClick() {
     try {
+
+      setLoading(true);
+
       const updatedCartItem =
         await updateDeliveryOption(
           item,
@@ -44,12 +48,18 @@ function DeliveryOption({option, item, setCart}: DeliveryOptionProps){
 
     } catch (error) {
       console.error(error);
+    }finally{
+      setLoading(false);
     }
   }
 
   return (
     <div className="delivery-option" onClick={handleClick}>
-      <input type="radio" checked={isChecked} name={`delivery-option-${item.productId}`} />
+      {
+        loading 
+        ? <span style={{marginTop: '10px'}} className="spinner"></span>
+        : <input type="radio" checked={isChecked} name={`delivery-option-${item.productId}`} />
+      }
       <div className="js-delivery-info">
         <span className="date">
           Wendesday, June 24
@@ -93,8 +103,10 @@ interface CartItemCardProps {
 function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemCardProps) {
 
   const [updateRequired, setUpdateRequired] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
   const [quantity, setQuantity] = useState(item.productQuantity);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const product = products.find(
     (product) => product.id === item.productId
@@ -115,6 +127,8 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
     }
 
     try {
+
+      setIsSaving(true);
       const updatedCartItem =
         await updateCartItemQuantity(
           item,
@@ -132,11 +146,14 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
       setUpdateRequired(false);
     } catch (error) {
       console.error(error);
+    }finally{
+      setIsSaving(false);
     }
   }
 
   async function handleDelete() {
     try {
+      setIsDeleting(true);
       await deleteCartItem(item.id);
 
       setCart(prev =>
@@ -147,6 +164,8 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
 
     } catch (error) {
       console.error(error);
+    }finally{
+      setIsDeleting(false);
     }
   }
 
@@ -173,18 +192,17 @@ function CartItemCard ({item, products, setCart, deliveryOptionsData}: CartItemC
                 <input 
                   type="number" 
                   min="1" 
-                  max="10" 
-                  value="${cartItem.productQuantity}" 
+                  max="10"
                   style={{width: '50px', marginLeft: '10px', paddingLeft: '10px'}}
                   onChange={(e) => setQuantity(Number(e.target.value))}
                 />
                 <span className="link-primary js-save-link" style={{marginLeft: '5px'}} onClick={handleSave}>
-                  Save
+                  {isSaving ? 'Saving...' : 'Save' }
                 </span>
               </>
             }
 
-            <span className="link-primary" onClick={handleDelete}>Delete</span>
+            <span className="link-primary" onClick={handleDelete}>{isDeleting ? 'Deleting...' : 'Delete' }</span>
           </div>
         </div>
 
