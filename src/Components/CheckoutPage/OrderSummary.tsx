@@ -198,7 +198,7 @@ function CartItemCard ({item, products, setCart, deliveryOptions}: CartItemCardP
           <div className="product-quantity">
             Quantity: {item.productQuantity} 
 
-            {!updateRequired && <span className="link-primary js-update-link" style={{marginLeft: '10px'}} onClick={() => {setUpdateRequired(true)}}>Update</span>}
+            {!updateRequired && <span className="checkout-link" onClick={() => {setUpdateRequired(true)}}>Update</span>}
 
             {
               updateRequired 
@@ -211,13 +211,13 @@ function CartItemCard ({item, products, setCart, deliveryOptions}: CartItemCardP
                   style={{width: '50px', marginLeft: '10px', paddingLeft: '10px'}}
                   onChange={(e) => setQuantity(Number(e.target.value))}
                 />
-                <span className="link-primary js-save-link" style={{marginLeft: '5px'}} onClick={handleSave}>
+                <span className="checkout-link" onClick={handleSave}>
                   {isSaving ? 'Saving...' : 'Save' }
                 </span>
               </>
             }
 
-            <span className="link-primary" onClick={handleDelete}>{isDeleting ? 'Deleting...' : 'Delete' }</span>
+            <span className="checkout-link" onClick={handleDelete}>{isDeleting ? 'Deleting...' : 'Delete' }</span>
           </div>
         </div>
 

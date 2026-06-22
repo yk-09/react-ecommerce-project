@@ -27,7 +27,7 @@ export function CheckoutPage({cart, products, setCart, deliveryOptions}: Checkou
     <>
       <title> Checkout Page</title>
 
-      <header className="kaamna-header">
+      <header className="checkout-header">
         <div className="header-content">
             <div className="brand-section">
               <Link to="/">

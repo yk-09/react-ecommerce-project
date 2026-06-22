@@ -1,4 +1,4 @@
-.kaamna-header {
+.checkout-header {
   background-color: #f9f7f0;
   padding: 1.5rem 0;
   /* Matching the subtle shadow and rounded corners from image_87c90d.jpg */
@@ -39,7 +39,7 @@
 
 /* Responsive Adjustments using Bootstrap-style breakpoints */
 @media (max-width: 768px) {
-  .kaamna-header {
+  .checkout-header {
     padding: 1rem 0;
     margin: 5px;
   }
@@ -107,14 +107,22 @@
 
 .cart-item-details-grid {
   display: grid;
-  grid-template-columns: 100px 1fr 1fr;
+  grid-template-columns: 120px 2fr 1fr;
   gap: 1.5rem;
   align-items: start;
+}
+
+.checkout-product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-self: start;
 }
 
 .checkout-product-image {
   width: 100%;
   border-radius: 8px;
+  object-fit: contain;
 }
 
 .checkout-product-name {
@@ -129,14 +137,14 @@
   margin: 4px 0;
 }
 
-.link-primary {
+.checkout-link {
   color: #1a3a2a;
   cursor: pointer;
   font-size: 0.9rem;
-  margin-right: 10px;
+  margin-left: 10px;
 }
 
-.link-primary:hover {
+.checkout-link:hover {
   color: #c45500;
   text-decoration: underline;
 }
@@ -237,11 +245,11 @@ hr {
 /* Mobile View */
 @media (max-width: 576px) {
   .cart-item-details-grid {
-    grid-template-columns: 1fr; /* Stack product info and delivery options */
+    grid-template-columns: 1fr;
     text-align: center;
   }
 
-  .product-image {
+  .checkout-product-image {
     width: 120px;
     margin: 0 auto;
   }

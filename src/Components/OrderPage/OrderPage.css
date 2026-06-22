@@ -1,10 +1,10 @@
-.container {
+.order-container {
   max-width: 900px;
   margin: 20px auto;
   padding: 0 15px;
 }
 
-.kaamna-header {
+.order-header {
   background: #ffffff;
   padding: 15px 0;
   border-bottom: 1px solid #d5d9d9;
@@ -62,7 +62,7 @@
   border-bottom: 1px solid #d5d9d9;
 }
 
-.label {
+.order-label {
   color: #565959;
   display: block;
   text-transform: uppercase;
@@ -70,7 +70,7 @@
   font-weight: bold;
 }
 
-.value {
+.order-value {
   font-weight: bold;
 }
 
@@ -108,13 +108,13 @@
   color: #1a3a2a;
 }
 
-.status {
+.order-status {
   font-weight: bold;
   color: #007600;
   margin-bottom: 5px;
 }
 
-.qty {
+.order-qty {
   font-size: 0.9rem;
   color: #565959;
 }
@@ -123,7 +123,7 @@
   width: 100%;
 }
 
-.btn {
+.order-btn {
   display: block;
   padding: 12px;
   border-radius: 8px;
@@ -135,14 +135,14 @@
   width: 100%;
 }
 
-.btn-primary {
+.order-btn-primary {
   background: #1a3a2a;
   color: #ffffff;
   text-decoration: none;
   justify-self: center;
 }
 
-.btn-secondary {
+.order-btn-secondary {
   background: #1a3a2a;
   color: #ffffff;
   border-color: #1a3a2a;
@@ -199,7 +199,7 @@
     width: auto;
   }
 
-  .btn-primary {
+  .order-btn-primary {
     width: 200px;
   }
 }

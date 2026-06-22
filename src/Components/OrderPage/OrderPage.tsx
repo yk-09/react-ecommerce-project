@@ -32,15 +32,15 @@ export function OrderProducts({item, product, option, orderTime}: OrderProductsP
         />
         <div className="product-details">
           <h3>{product.name}</h3>
-          <p className="status">
+          <p className="order-status">
             Arriving on: <span className="arrival-date">{dateFormatted}</span>
           </p>
-          <p className="qty">Quantity: {item.productQuantity}</p>
+          <p className="order-qty">Quantity: {item.productQuantity}</p>
         </div>
       </div>
       <div className="product-actions">
         <Link
-          className="btn btn-primary"
+          className="order-btn order-btn-primary"
           to="/tracking-page?orderId=123&productId=456"
         >
           Track package
@@ -64,16 +64,16 @@ function Order({order, products, deliveryOptions}: OrderProps) {
     <article className="order-card">
       <header className="order-card-header">
         <div className="meta-item">
-          <span className="label">Order Placed:</span>
-          <span className="value">{orderDate}</span>
+          <span className="order-label">Order Placed:</span>
+          <span className="order-value">{orderDate}</span>
         </div>
         <div className="meta-item">
-          <span className="label">Total:</span>
-          <span className="value">Rs {formatCurrency(order.totalPrice)}</span>
+          <span className="order-label">Total:</span>
+          <span className="order-value">Rs {formatCurrency(order.totalPrice)}</span>
         </div>
         <div className="meta-item order-id-group">
-          <span className="label">Order ID:</span>
-          <span className="value">{order.orderId}</span>
+          <span className="order-label">Order ID:</span>
+          <span className="order-value">{order.orderId}</span>
         </div>
       </header>
 
@@ -133,7 +133,7 @@ export function OrderPage({products, deliveryOptions}: OrderPageProps) {
 
   return (
     <>
-      <header className="kaamna-header">
+      <header className="order-header">
         <div className="header-container">
           <div className="brand-identity">
             <Link to="/">
@@ -146,7 +146,7 @@ export function OrderPage({products, deliveryOptions}: OrderPageProps) {
         </div>
       </header>
 
-      <main className="container">
+      <main className="order-container">
         {isLoading && <SkeletonLoad />}
 
         <section className="orders-list js-order-list">
