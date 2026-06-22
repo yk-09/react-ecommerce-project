@@ -190,11 +190,11 @@ function CartItemCard ({item, products, setCart, deliveryOptions}: CartItemCardP
     <div className="cart-item-container">
       <div className="delivery-date">Delivery date: {formattedDate}</div>
       <div className="cart-item-details-grid">
-        <img src={product.image} />
+        <img src={product.image} className="checkout-product-image" />
 
-        <div className="product-info">
-          <div className="product-name">{product.name}</div>
-          <div className="product-price">₹{formatCurrency(product.pricePaisa)}</div>
+        <div className="checkout-product-info">
+          <div className="checkout-product-name">{product.name}</div>
+          <div className="checkout-product-price">₹{formatCurrency(product.pricePaisa)}</div>
           <div className="product-quantity">
             Quantity: {item.productQuantity} 
 

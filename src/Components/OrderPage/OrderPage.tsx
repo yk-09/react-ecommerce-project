@@ -25,10 +25,10 @@ export function OrderProducts({item, product, option, orderTime}: OrderProductsP
 
   return (
     <div className="order">
-      <div className="product-info">
+      <div className="order-product-info">
         <img
           src={product.image}
-          className="product-thumb"
+          className="order-product-thumb"
         />
         <div className="product-details">
           <h3>{product.name}</h3>

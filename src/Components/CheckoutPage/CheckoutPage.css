@@ -112,19 +112,19 @@
   align-items: start;
 }
 
-.product-image {
+.checkout-product-image {
   width: 100%;
   border-radius: 8px;
 }
 
-.product-name {
+.checkout-product-name {
   font-weight: 700;
   font-size: 1.1rem;
   color: #1a3a2a;
 }
 
-.product-price {
-  color: #1a3a2a; /* Classic price alert color */
+.checkout-product-price {
+  color: #1a3a2a; 
   font-weight: 700;
   margin: 4px 0;
 }
