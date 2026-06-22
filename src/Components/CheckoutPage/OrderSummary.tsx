@@ -6,7 +6,6 @@
 */
 import { useState } from "react"
 import type { CartItem, DeliveryOptions } from "../../types/cart";
-import './CheckoutPage.css';
 import './EmptyCart.css';
 import type { Product } from "../../types/product";
 import formatCurrency from "../../utility/formatCurrency";
@@ -63,7 +62,7 @@ function DeliveryOption({option, item, setCart}: DeliveryOptionProps){
       {
         loading 
         ? <span style={{marginTop: '10px'}} className="spinner"></span>
-        : <input type="radio" checked={isChecked} name={`delivery-option-${item.productId}`} />
+        : <input type="radio" defaultChecked={isChecked} name={`delivery-option-${item.productId}`} />
       }
       <div className="js-delivery-info">
         <span className="date">
@@ -89,7 +88,7 @@ export function OptionCard({item, setCart, deliveryOptions}: OptionCardProps){
       <div className="option-title">Choose a delivery option:</div>
       <div className="delivery-options">
         {deliveryOptions.map((option) => {
-          return <DeliveryOption option={option} item={item} setCart={setCart} />
+          return <DeliveryOption key={option.id} option={option} item={item} setCart={setCart} />
         })}
       </div>
     </div>
@@ -191,14 +190,13 @@ function CartItemCard ({item, products, setCart, deliveryOptions}: CartItemCardP
     <div className="cart-item-container">
       <div className="delivery-date">Delivery date: {formattedDate}</div>
       <div className="cart-item-details-grid">
-        <img src={product.image} width={100}  />
+        <img src={product.image} />
 
         <div className="product-info">
           <div className="product-name">{product.name}</div>
           <div className="product-price">₹{formatCurrency(product.pricePaisa)}</div>
           <div className="product-quantity">
             Quantity: {item.productQuantity} 
-
 
             {!updateRequired && <span className="link-primary js-update-link" style={{marginLeft: '10px'}} onClick={() => {setUpdateRequired(true)}}>Update</span>}
 
@@ -244,7 +242,7 @@ export function CartSummary ({cart, products, setCart, deliveryOptions}: CartSum
     <div className="order-review js-order-review">
       <h2>Review your attachments</h2>
       {cart.map((item) => {
-        return <CartItemCard products={products} item={item} setCart={setCart} deliveryOptions={deliveryOptions} />
+        return <CartItemCard key={item.id} products={products} item={item} setCart={setCart} deliveryOptions={deliveryOptions} />
       })}
     </div>
   )
@@ -256,7 +254,7 @@ export function EmptyCart(){
       <div className="empty-cart-card">
         
         <div className="illustration-container">
-          <svg className="large-cart-svg" viewBox="0 0 24 24" fill="none" stroke="#1a3a2a" stroke-width="1.5">
+          <svg className="large-cart-svg" viewBox="0 0 24 24" fill="none" stroke="#1a3a2a" strokeWidth="1.5">
             <circle cx="9" cy="21" r="1"></circle>
             <circle cx="20" cy="21" r="1"></circle>
             <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>

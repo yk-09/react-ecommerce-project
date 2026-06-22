@@ -6,6 +6,7 @@ import { createOrder } from "../../services/orderApi";
 import { deleteCartItem } from "../../services/cartApi";
 import { useState } from "react";
 import './loading.css';
+import { useNavigate } from "react-router-dom";
 
 interface PaymentSummaryProps {
   cartQuantity: number,
@@ -50,28 +51,31 @@ export function PaymentSummary({ cartQuantity, cart, products, deliveryOptions, 
   const totalBeforeTax = totalProductsCost + shippingCost;
   const extimatedTax = totalBeforeTax * 0.1;
   const grandTotal = totalBeforeTax + extimatedTax;
+  const navigate = useNavigate();
 
   async function handlePlaceOrder() {
-  try {
+    try {
 
-    setLoading(true);
+      setLoading(true);
 
-    await createOrder(cart, grandTotal);
+      await createOrder(cart, grandTotal);
 
-    await Promise.all(
-      cart.map((item) =>
-        deleteCartItem(item.id)
-      )
-    );
+      await Promise.all(
+        cart.map((item) =>
+          deleteCartItem(item.id)
+        )
+      );
 
-    setCart([]);
+      setCart([]);
 
-  } catch (error) {
-    console.error(error);
-  }finally{
-    setLoading(false);
+      navigate("/orders");
+
+    } catch (error) {
+      console.error(error);
+    }finally{
+      setLoading(false);
+    }
   }
-}
 
   return (
     <section className="payment-summary">

@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import type { CartItem } from "../../types/cart";
 import type { Product } from "../../types/product";
 import type { DeliveryOptions } from "../../types/cart";
+import './CheckoutPage.css';
 
 interface CheckoutPageProps {
   cart: CartItem[],
