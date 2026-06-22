@@ -10,31 +10,87 @@ This project was originally built using **Vanilla JavaScript** and later fully m
 
 ## 🚀 Live Demo
 
-🔗 Add your deployed link here
+🔗 **Live Application**
 
-```txt
-https://your-deployment-url.com
-```
+https://react-ecommerce-project-xi.vercel.app/
+
+Experience the complete Kaamna eCommerce workflow:
+
+* Browse products
+* Search products in real-time
+* Add items to cart
+* Update quantities
+* Select delivery options
+* Place orders
+* View order history
+* Track orders
+
+Deployed on Vercel.
+
 
 ---
 
 ## 📸 Screenshots
 
-### Homepage
+### 🖥 Desktop Experience
 
-_Add screenshot here_
+The primary shopping experience featuring product discovery, search, cart management, and responsive product cards.
 
-### Checkout Page
+![Homepage Desktop](./screenshots/homepage-desktop.jpg)
 
-_Add screenshot here_
+---
 
-### Orders Page
+### 📱 Mobile Experience
 
-_Add screenshot here_
+Fully responsive mobile layout with a dedicated navigation experience and mobile-optimized product browsing.
 
-### Tracking Page
+![Homepage Mobile](./screenshots/homepage-mobile.jpg)
 
-_Add screenshot here_
+---
+
+### 🔍 Real-Time Product Search
+
+Instant product suggestions while typing, allowing users to quickly discover products.
+
+![Product Search](./screenshots/homepage-search.jpg)
+
+---
+
+### 🛒 Empty Cart State
+
+Custom-designed empty cart experience encouraging users to continue shopping.
+
+![Empty Cart](./screenshots/empty-cart.jpg)
+
+---
+
+### 💳 Checkout Experience
+
+Complete checkout workflow featuring:
+
+- Order summary
+- Delivery option selection
+- Dynamic shipping costs
+- Tax calculations
+- Total order computation
+
+![Checkout Page](./screenshots/checkout.jpg)
+
+---
+
+### 📦 Orders Page
+
+Users can review previous orders, view delivery information, and access order tracking.
+
+![Orders Page](./screenshots/orders-page.jpg)
+
+---
+
+### 🚚 Order Tracking
+
+Track individual orders with delivery progress visualization and estimated arrival information.
+
+![Tracking Page](./screenshots/tracking-page.jpg)
 
 ---
 
@@ -443,7 +499,7 @@ npm run build
 
 Frontend Developer
 
-- LinkedIn: Add your LinkedIn URL
+- LinkedIn: LinkedIn URL
 - GitHub: https://github.com/yk-09
 
 ---
