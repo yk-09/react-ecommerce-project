@@ -41,7 +41,7 @@ export function OrderProducts({item, product, option, orderTime}: OrderProductsP
       <div className="product-actions">
         <Link
           className="order-btn order-btn-primary"
-          to="/tracking-page?orderId=123&productId=456"
+          to={`/tracking?itemQuantity=${item.productQuantity}&&dateFormatted=${dateFormatted}&&productName=${product.name}&&productImage=${product.image}`}
         >
           Track package
         </Link>

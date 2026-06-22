@@ -9,6 +9,7 @@ import { getCartBackend } from './services/cartApi'
 import { getProductsBackend } from './services/productApi'
 import { OrderPage } from './Components/OrderPage/OrderPage'
 import { getDeliveryOptions } from './services/deliveryOptionsApi'
+import { TrackingPage } from './Components/TrackingOrderPage/TrackingPage'
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
       <Route path="/" element={<HomePage products={products} isLoading={isLoading} cart={cart} setCart={setCart} />} />
       <Route path="/checkout" element={<CheckoutPage cart={cart} products={products} setCart={setCart} deliveryOptions={deliveryOptions} />} />
       <Route path="/orders" element={<OrderPage products={products} deliveryOptions={deliveryOptions} />} />
+      <Route path="/tracking" element={<TrackingPage />} />
     </Routes>
   )
 }
