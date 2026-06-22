@@ -51,14 +51,14 @@ export function OrderProducts({item, product, option, orderTime}: OrderProductsP
 }
 
 interface OrderProps {
-  order: Order,
+  latestOrder: Order,
   products: Product[],
   deliveryOptions: DeliveryOptions[]
 }
 
-function Order({order, products, deliveryOptions}: OrderProps) {
+function Order({latestOrder, products, deliveryOptions}: OrderProps) {
 
-  const orderDate = dayjs(order.orderTime).format("dddd, MMMM D");
+  const orderDate = dayjs(latestOrder.orderTime).format("dddd, MMMM D");
 
   return (
     <article className="order-card">
@@ -69,16 +69,16 @@ function Order({order, products, deliveryOptions}: OrderProps) {
         </div>
         <div className="meta-item">
           <span className="order-label">Total:</span>
-          <span className="order-value">Rs {formatCurrency(order.totalPrice)}</span>
+          <span className="order-value">Rs {formatCurrency(latestOrder.totalPrice)}</span>
         </div>
         <div className="meta-item order-id-group">
           <span className="order-label">Order ID:</span>
-          <span className="order-value">{order.orderId}</span>
+          <span className="order-value">{latestOrder.orderId}</span>
         </div>
       </header>
 
       <div className="order-body">
-        {order.products.map((item) => {
+        {latestOrder.products.map((item) => {
 
           const product = products.find((product) => {
             return item.productId === product.id
@@ -92,7 +92,7 @@ function Order({order, products, deliveryOptions}: OrderProps) {
 
           if(!option){return}
 
-          return <OrderProducts key={item.productId} item={item} product={product} option={option} orderTime={order.orderTime}/>
+          return <OrderProducts key={item.productId} item={item} product={product} option={option} orderTime={latestOrder.orderTime}/>
         })}
       </div>
 
@@ -114,6 +114,7 @@ export function OrderPage({products, deliveryOptions}: OrderPageProps) {
 
   const [orders, setOrders] = useState<Order[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const latestOrders = [...orders].reverse();
 
   useEffect(() => {
     async function loadOrders() {
@@ -150,8 +151,8 @@ export function OrderPage({products, deliveryOptions}: OrderPageProps) {
         {isLoading && <SkeletonLoad />}
 
         <section className="orders-list js-order-list">
-          {orders.map((order) => {
-            return <Order key={order.orderId} order={order} products={products} deliveryOptions={deliveryOptions} />
+          {latestOrders.map((latestOrder) => {
+            return <Order key={latestOrder.orderId} latestOrder={latestOrder} products={products} deliveryOptions={deliveryOptions} />
           })}
         </section>
       </main>
