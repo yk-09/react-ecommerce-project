@@ -31,7 +31,7 @@ export function CheckoutPage({cart, products, setCart, deliveryOptions}: Checkou
         <div className="header-content">
             <div className="brand-section">
               <Link to="/">
-                <img src="/brand-icon.jpg" alt="Kaamna Icon" className="brand-icon" />
+                <img src="/brand-icon.jpg" alt="Kaamna Icon" className="brand-icon" loading="lazy" />
               </Link>
             </div>
           <div className="checkout-status js-checkout-status">

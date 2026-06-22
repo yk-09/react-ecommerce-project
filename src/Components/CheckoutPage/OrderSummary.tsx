@@ -190,7 +190,7 @@ function CartItemCard ({item, products, setCart, deliveryOptions}: CartItemCardP
     <div className="cart-item-container">
       <div className="delivery-date">Delivery date: {formattedDate}</div>
       <div className="cart-item-details-grid">
-        <img src={product.image} className="checkout-product-image" />
+        <img src={product.image} className="checkout-product-image" loading="lazy" />
 
         <div className="checkout-product-info">
           <div className="checkout-product-name">{product.name}</div>

@@ -98,7 +98,7 @@ export function SearchProducts({filteredProducts}: SearchProductsProps){
       <ul className="searched-products">
         {filteredProducts.map((filteredPro) => {
           return (
-            <li>{filteredPro.name}</li>
+            <li key={filteredPro.id} >{filteredPro.name}</li>
           ) 
         })}
       </ul>

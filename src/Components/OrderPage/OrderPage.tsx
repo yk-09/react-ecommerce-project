@@ -28,7 +28,7 @@ export function OrderProducts({item, product, option, orderTime}: OrderProductsP
       <div className="order-product-info">
         <img
           src={product.image}
-          className="order-product-thumb"
+          className="order-product-thumb" loading="lazy"
         />
         <div className="product-details">
           <h3>{product.name}</h3>
