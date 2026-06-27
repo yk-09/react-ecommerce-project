@@ -34,9 +34,9 @@ export function HomePage({ products, isLoading, cart, setCart }: HomePagePros) {
     }
 
     const newProducts = productsData.filter(
-      (product, index) =>
-        product.name.toLowerCase().includes(searchTerm) && index < 10
-    );
+      (product) =>
+        product.name.toLowerCase().includes(searchTerm)
+    ).slice(0, 10);
 
     setFilteredProducts(newProducts);
   }
